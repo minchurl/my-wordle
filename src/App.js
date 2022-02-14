@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM, { render } from 'react-dom';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
 import Game from './game.js';
+import './App.css';
 
 
 function App() {
   return (
-    <div>
-
+    <div className="container">
       <Game/>
     </div>
   );

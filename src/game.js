@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM, { render } from 'react-dom';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-import RenderTable from './renderTable';
+import Table from './table';
 import axios from 'axios';
+import './game.css';
+
 
 const ALPHABET_LIST = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -15,7 +17,7 @@ class Game extends React.Component {
         super(props);
         this.state = {
             hidden_word: "ultra",
-            ch_table: Array.from(Array(6), () => Array(5).fill('_')),
+            table: Array.from(Array(6), () => Array(5).fill(null)),
             curr_i: 0,
             curr_j: 0,
             is_game_ended: false, 
@@ -35,11 +37,11 @@ class Game extends React.Component {
             return;
         }
 
-        const ch_table = this.state.ch_table.slice();
-        ch_table[this.state.curr_i][this.state.curr_j] = ch;
+        const table = this.state.table.slice();
+        table[this.state.curr_i][this.state.curr_j] = ch;
 
         this.setState({
-            ch_table: ch_table, 
+            table: table, 
             curr_j: this.state.curr_j + 1, 
         });
         
@@ -59,7 +61,7 @@ class Game extends React.Component {
         
         var word = new String("");
         for (let i = 0; i < 5; i++) {
-            word += this.state.ch_table[this.state.curr_i][i];
+            word += this.state.table[this.state.curr_i][i];
         }
 
         // TODO: validate the word's existance and compare with the secret word
@@ -102,20 +104,20 @@ class Game extends React.Component {
         if (this.state.curr_j == 0 ){
             return;
         }
-        const ch_table = this.state.ch_table.slice();
-        ch_table[this.state.curr_i][this.state.curr_j - 1] = '_';
+        const table = this.state.table.slice();
+        table[this.state.curr_i][this.state.curr_j - 1] = null;
 
         this.setState({
-            ch_table: ch_table, 
+            table: table, 
             curr_j: this.state.curr_j - 1, 
         });
     }
 
     render() {
         return (
-            <div>
-                <RenderTable
-                    ch_table={this.state.ch_table}
+            <div className="game">
+                <Table
+                    table={this.state.table}
                 />
 
                 <KeyboardEventHandler

@@ -1,0 +1,11 @@
+.table {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.line {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
