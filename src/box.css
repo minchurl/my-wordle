@@ -6,3 +6,33 @@
 
     border: 1px solid black;
 }
+
+.whiteBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    background-color: white;
+    border: 1px solid black;
+}
+
+.greenBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    background-color: greenyellow;
+    border: 1px solid black;
+}
+
+.yellowBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    background-color: yellow;
+    border: 1px solid black;
+}

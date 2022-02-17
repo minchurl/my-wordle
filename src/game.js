@@ -17,7 +17,10 @@ class Game extends React.Component {
         super(props);
         this.state = {
             hidden_word: "ultra",
-            table: Array.from(Array(6), () => Array(5).fill(null)),
+            table: Array.from(Array(6), () => Array(5).fill({
+                character: null, 
+                color: "whiteBox",
+            })),
             curr_i: 0,
             curr_j: 0,
             is_game_ended: false, 
@@ -38,7 +41,10 @@ class Game extends React.Component {
         }
 
         const table = this.state.table.slice();
-        table[this.state.curr_i][this.state.curr_j] = ch;
+        table[this.state.curr_i][this.state.curr_j] = {
+            character: ch, 
+            color: "whiteBox", 
+        };
 
         this.setState({
             table: table, 
@@ -61,7 +67,7 @@ class Game extends React.Component {
         
         var word = new String("");
         for (let i = 0; i < 5; i++) {
-            word += this.state.table[this.state.curr_i][i];
+            word += this.state.table[this.state.curr_i][i].character;
         }
 
         // TODO: validate the word's existance and compare with the secret word
@@ -77,21 +83,40 @@ class Game extends React.Component {
             return;
         }
 
-        // TODO: is_game_done??
 
+        // After done, update the state of game
+
+        const table = this.state.table.slice();
+
+        for (let j = 0; j < 5; j++) {
+            const ch = table[this.state.curr_i][j].character;
+            if (ch === this.state.hidden_word[j]) {
+                table[this.state.curr_i][j] = {
+                    character: ch, 
+                    color: "greenBox", 
+                }
+            }
+            else if (this.state.hidden_word.includes(ch)) {
+                table[this.state.curr_i][j] = {
+                    character: ch, 
+                    color: "yellowBox", 
+                }
+            }
+        }
+
+        this.setState({
+            curr_i: this.state.curr_i + 1, 
+            curr_j: 0, 
+            table: table, 
+        });
+
+        // TODO: is_game_done??
         if (word === this.state.hidden_word) {
             this.setState({
                 is_game_ended: true, 
             });
             return;
         }
-
-        // After done, update the state of game
-
-        this.setState({
-            curr_i: this.state.curr_i + 1, 
-            curr_j: 0, 
-        });
 
     }
 
@@ -105,7 +130,10 @@ class Game extends React.Component {
             return;
         }
         const table = this.state.table.slice();
-        table[this.state.curr_i][this.state.curr_j - 1] = null;
+        table[this.state.curr_i][this.state.curr_j - 1] = {
+            character: null, 
+            color: "whiteBox", 
+        };
 
         this.setState({
             table: table, 

@@ -11,12 +11,12 @@ class Table extends React.Component {
 
     render() {
         const renderTable = this.props.table.map((list, i) => {
-            const renderList = list.map((character, j) => {
+            const renderList = list.map((box, j) => {
                 return (
                     <Box key={j}
                         i={i} 
                         j={j} 
-                        character={character} 
+                        box={box} 
                     />
                 );
             });
