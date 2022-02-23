@@ -6,6 +6,7 @@ import axios from 'axios';
 import './game.css';
 
 
+
 const ALPHABET_LIST = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 // <KeyboardEventHandler
@@ -13,10 +14,12 @@ const ALPHABET_LIST = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l
 // onKeyEvent={(key, e) => console.log('only handle "a" key')} />
 
 class Game extends React.Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
-            hidden_word: "ultra",
+            hidden_word: "yield",
             table: Array.from(Array(6), () => Array(5).fill({
                 character: null, 
                 color: "whiteBox",
@@ -78,7 +81,7 @@ class Game extends React.Component {
             .then(() => {is_valid_word = true;})
             .catch(() => {is_valid_word = false;})
         ;
-        
+
         if (!is_valid_word) {
             return;
         }
