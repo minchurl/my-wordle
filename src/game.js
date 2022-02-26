@@ -19,7 +19,6 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hidden_word: "yield",
             table: Array.from(Array(6), () => Array(5).fill({
                 character: null, 
                 color: "whiteBox",
@@ -75,14 +74,10 @@ class Game extends React.Component {
 
         // TODO: validate the word's existance and compare with the secret word
 
-        var is_valid_word = null;
+        let is_valid_word = await (await fetch('http://minchurl.click/api/validate_word/' + word)).text();
 
-        await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word)
-            .then(() => {is_valid_word = true;})
-            .catch(() => {is_valid_word = false;})
-        ;
-
-        if (!is_valid_word) {
+        console.log(is_valid_word);
+        if (is_valid_word === 'false') {
             return;
         }
 
@@ -90,18 +85,19 @@ class Game extends React.Component {
         // After done, update the state of game
 
         const table = this.state.table.slice();
+        let score = await (await fetch('http://minchurl.click/api/score_word/' + word)).text();
+        console.log(score);
 
         for (let j = 0; j < 5; j++) {
-            const ch = table[this.state.curr_i][j].character;
-            if (ch === this.state.hidden_word[j]) {
+            if (score[j] === 'G') {
                 table[this.state.curr_i][j] = {
-                    character: ch, 
+                    character: table[this.state.curr_i][j].character, 
                     color: "greenBox", 
                 }
             }
-            else if (this.state.hidden_word.includes(ch)) {
+            else if (score[j] === 'Y') {
                 table[this.state.curr_i][j] = {
-                    character: ch, 
+                    character: table[this.state.curr_i][j].character, 
                     color: "yellowBox", 
                 }
             }
